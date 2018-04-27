@@ -1,0 +1,14 @@
+<Context docBase="\Notepad_server_side\target\Notepad_server_side-1.0-SNAPSHOT\" path="/Notepad_server_side" reloadable="true" >
+              <Resource
+                    name="jdbc/springmvc"
+                    auth="Container"
+                    type="javax.sql.DataSource"
+                    username="root"
+                     password=""
+                     driverClassName="com.mysql.jdbc.Driver"
+                     url="jdbc:mysql://localhost:3306/notepad?zeroDateTimeBehavior=convertToNull"
+                     maxActive="15"
+                     maxIdle="3"
+                      />
+</Context>
+
