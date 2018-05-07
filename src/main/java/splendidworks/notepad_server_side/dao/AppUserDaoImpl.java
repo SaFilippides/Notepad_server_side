@@ -8,7 +8,9 @@ package splendidworks.notepad_server_side.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -54,6 +56,20 @@ public class AppUserDaoImpl implements AppUserDao {
         return parameterSource;
     }
 
+    @Override
+    public List<AppUser> findUserByName(String username) {
+
+        List<AppUser> list = new ArrayList<AppUser>();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("username", username);
+        
+        String sql = "SELECT * FROM app_user WHERE username =:username";
+
+        list =  namedParameterJdbcTemplate.query(sql, params, new AppUserMapper());
+        return list;
+        
+    }
+
     private static final class AppUserMapper implements RowMapper<AppUser> {
 
         public AppUser mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -66,11 +82,26 @@ public class AppUserDaoImpl implements AppUserDao {
 
     }
 
-    @Override
-    public void addUser(AppUser user) {
-        String sql = "INSERT INTO app_user(username, password) VALUES(:username, :password)";
+    public boolean userExists(AppUser user) {
+        String sql = "SELECT count(*) FROM app_user WHERE username =:username";
+        boolean result = false;
+        int count = namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(user), Integer.class);
+        if (count > 0) {
+            result = true;
+        }
+        return result;
+    }
 
-        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
+    @Override
+    public boolean addUser(AppUser user) {
+
+        if (!userExists(user)) {
+            String sql = "INSERT INTO app_user(username, password) VALUES(:username, :password)";
+            namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

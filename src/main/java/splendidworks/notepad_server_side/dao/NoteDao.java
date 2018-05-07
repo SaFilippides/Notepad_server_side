@@ -14,13 +14,13 @@ import splendidworks.notepad_server_side.model.Note;
  */
 public interface NoteDao {
 
-    public List<Note> listAllNotes();
+    public List<Note> listAllNotes(Integer user_id);
 
     public void addNote(Note note);
 
-    public void updateNote(Note note);
+    public void updateNote(Integer user_id);
 
-    public void delete(Note note);
+    public void delete(Integer user_id);
 
     public Note findNoteById(Note note);
 

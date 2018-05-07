@@ -12,6 +12,7 @@ package splendidworks.notepad_server_side.model;
 public class Note {
 
     private Integer id;
+    private Integer user_id;
     private String name;
     private String image_path;
     private String note;
@@ -24,6 +25,14 @@ public class Note {
     public Note(Integer id) {
         super();
         this.id = id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public Integer getId() {

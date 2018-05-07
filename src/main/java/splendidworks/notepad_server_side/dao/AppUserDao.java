@@ -16,12 +16,15 @@ public interface AppUserDao {
 
     public List<AppUser> listAllUser();
 
-    public void addUser(AppUser user);
+    public boolean addUser(AppUser user);
 
     public void updateUser(AppUser user);
 
     public void delete(AppUser user);
 
     public AppUser findUserById(AppUser user);
+    
+    public List<AppUser> findUserByName(String username);
+    
 
 }

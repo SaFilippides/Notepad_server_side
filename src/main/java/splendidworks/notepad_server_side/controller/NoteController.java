@@ -31,9 +31,9 @@ public class NoteController {
     NoteService noteUserService;
     
 
-    @RequestMapping(value = "/view/", method = RequestMethod.GET, headers = "Accept=application/json")
-    public ResponseEntity<List<Note>> listAllNotes() {
-        List<Note> list = noteUserService.listAllNotes();
+    @RequestMapping(value = "/view/{user_id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<Note>> listAllNotes(@PathVariable("user_id") Integer user_id) {
+        List<Note> list = noteUserService.listAllNotes(user_id);
 
         if (list.size() == 0) {
             return new ResponseEntity<List<Note>>(HttpStatus.NO_CONTENT);
@@ -63,7 +63,7 @@ public class NoteController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public ResponseEntity<Void> delete(@PathVariable("id") int id, @RequestBody Note note) {
         note.setId(id);
-        noteUserService.delete(note);
+        noteUserService.delete(id);
 
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.NO_CONTENT);

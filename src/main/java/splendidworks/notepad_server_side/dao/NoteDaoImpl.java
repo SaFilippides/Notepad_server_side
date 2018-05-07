@@ -8,7 +8,9 @@ package splendidworks.notepad_server_side.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,12 +34,14 @@ public class NoteDaoImpl implements NoteDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public List<Note> listAllNotes() {
+    public List<Note> listAllNotes(Integer user_id) {
         List<Note> list = new ArrayList<Note>();
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put("user_id", user_id);
 
-        String sql = "SELECT id, name, image_path, note FROM note";
+        String sql = "SELECT * FROM `note` WHERE user_id = :user_id";
 
-        list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new NoteMapper());
+        list = namedParameterJdbcTemplate.query(sql, params, new NoteMapper());
 
         return list;
     }
@@ -49,6 +53,7 @@ public class NoteDaoImpl implements NoteDao {
             parameterSource.addValue("name", note.getName());
             parameterSource.addValue("image_path", note.getImagePath());
             parameterSource.addValue("note", note.getNote());
+            parameterSource.addValue("user_id", note.getUser_id());
         }
         return parameterSource;
     }
@@ -61,28 +66,33 @@ public class NoteDaoImpl implements NoteDao {
             note.setName(rs.getString("name"));
             note.setImagePath(rs.getString("image_path"));
             note.setNote(rs.getString("note"));
+            note.setUser_id(rs.getInt("user_id"));
 
             return note;
         }
 
     }
 
+    @Override
     public void addNote(Note note) {
-        String sql = "INSERT INTO note(name, image_path, note) VALUES(:name, :image_path, :note)";
 
+        String sql = "INSERT INTO note(name, note, image_path, user_id) VALUES(:name, :note, :image_path, :user_id)";
         namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
+
     }
 
-    public void updateNote(Note note) {
+    @Override
+    public void updateNote(Integer user_id) {
         String sql = "UPDATE note SET name=:name, image_path=:image_path, note=:note WHERE id =:id";
 
-        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
+        // namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
     }
 
-    public void delete(Note note) {
+    @Override
+    public void delete(Integer user_id) {
         String sql = "DELETE FROM note WHERE id=:id";
 
-        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
+        // namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
     }
 
     public Note findNoteById(Note note) {

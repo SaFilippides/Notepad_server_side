@@ -27,8 +27,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List listAllNotes() {
-        return noteDao.listAllNotes();
+    public List<Note> listAllNotes(Integer user_id) {
+        return noteDao.listAllNotes(user_id);
     }
 
     @Override
@@ -37,18 +37,20 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updateNote(Note note) {
-        noteDao.updateNote(note);
+    public void updateNote(Integer user_id) {
+        noteDao.updateNote(user_id);
     }
 
     @Override
-    public void delete(Note note) {
-        noteDao.delete(note);
+    public void delete(Integer user_id) {
+        noteDao.delete(user_id);
     }
 
     @Override
     public Note findNoteById(Note note) {
         return noteDao.findNoteById(note);
     }
+
+    
 
 }

@@ -31,8 +31,12 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void addUser(AppUser user) {
-        appUserDao.addUser(user);
+    public boolean addUser(AppUser user) {
+        if (appUserDao.addUser(user))
+        {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -49,5 +53,11 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUser findUserById(AppUser user) {
        return appUserDao.findUserById(user);
     }
+
+    @Override
+    public List<AppUser> findUserByName(String username) {
+       return appUserDao.findUserByName(username);
+    }
+    
 
 }
