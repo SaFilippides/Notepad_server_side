@@ -37,13 +37,13 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updateNote(Integer user_id) {
-        noteDao.updateNote(user_id);
+    public void updateNote(Note note) {
+        noteDao.updateNote(note);
     }
 
     @Override
-    public void delete(Integer user_id) {
-        noteDao.delete(user_id);
+    public void delete(Integer id) {
+        noteDao.delete(id);
     }
 
     @Override

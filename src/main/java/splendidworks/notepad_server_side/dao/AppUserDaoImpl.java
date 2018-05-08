@@ -57,13 +57,15 @@ public class AppUserDaoImpl implements AppUserDao {
     }
 
     @Override
-    public List<AppUser> findUserByName(String username) {
+    public List<AppUser> findUserByName(String username, String password) {
 
         List<AppUser> list = new ArrayList<AppUser>();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);
+        params.put("password", password);
         
-        String sql = "SELECT * FROM app_user WHERE username =:username";
+        
+        String sql = "SELECT * FROM app_user WHERE username =:username AND password =:password";
 
         list =  namedParameterJdbcTemplate.query(sql, params, new AppUserMapper());
         return list;

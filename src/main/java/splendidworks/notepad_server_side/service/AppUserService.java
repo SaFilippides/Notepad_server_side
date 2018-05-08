@@ -25,7 +25,7 @@ public interface AppUserService {
 
     public AppUser findUserById(AppUser user);
     
-    public List<AppUser> findUserByName(String username);
+    public List<AppUser> findUserByName(String username, String password);
     
 
 }

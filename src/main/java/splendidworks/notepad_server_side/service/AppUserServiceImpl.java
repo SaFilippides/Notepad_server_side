@@ -55,8 +55,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<AppUser> findUserByName(String username) {
-       return appUserDao.findUserByName(username);
+    public List<AppUser> findUserByName(String username, String password) {
+       return appUserDao.findUserByName(username, password);
     }
     
 

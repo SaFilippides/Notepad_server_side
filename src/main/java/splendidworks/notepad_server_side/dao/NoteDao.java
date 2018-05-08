@@ -18,9 +18,9 @@ public interface NoteDao {
 
     public void addNote(Note note);
 
-    public void updateNote(Integer user_id);
+    public void updateNote(Note note);
 
-    public void delete(Integer user_id);
+    public void delete(Integer id);
 
     public Note findNoteById(Note note);
 

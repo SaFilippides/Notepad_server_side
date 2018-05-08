@@ -43,9 +43,9 @@ public class UserController {
         return new ResponseEntity<List<AppUser>>(list, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/checkbyyname/{username}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public ResponseEntity<List<AppUser>> checkByName(@PathVariable("username") String username) {
-        List<AppUser> list = appUserService.findUserByName(username);
+    @RequestMapping(value = "/checkbyyname/{username}/{password}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<AppUser>> checkByName(@PathVariable("username") String username, @PathVariable("password") String password) {
+        List<AppUser> list = appUserService.findUserByName(username, password);
         HttpHeaders headers = new HttpHeaders();
         
         if (list.size() == 0) {

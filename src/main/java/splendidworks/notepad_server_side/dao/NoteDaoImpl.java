@@ -82,17 +82,20 @@ public class NoteDaoImpl implements NoteDao {
     }
 
     @Override
-    public void updateNote(Integer user_id) {
+    public void updateNote(Note note) {
         String sql = "UPDATE note SET name=:name, image_path=:image_path, note=:note WHERE id =:id";
 
-        // namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
+        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
     }
 
     @Override
-    public void delete(Integer user_id) {
+    public void delete(Integer id) {
+        
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id", id);
         String sql = "DELETE FROM note WHERE id=:id";
 
-        // namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
+        namedParameterJdbcTemplate.update(sql, parameterSource);
     }
 
     public Note findNoteById(Note note) {

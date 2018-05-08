@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;  
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +29,6 @@ public class NoteController {
 
     @Autowired
     NoteService noteUserService;
-    
 
     @RequestMapping(value = "/view/{user_id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<List<Note>> listAllNotes(@PathVariable("user_id") Integer user_id) {
@@ -41,8 +40,7 @@ public class NoteController {
 
         return new ResponseEntity<List<Note>>(list, HttpStatus.OK);
     }
-    
-    
+
     @RequestMapping(value = "/add/", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<Void> add(@RequestBody Note note) {
         noteUserService.addNote(note);
@@ -51,18 +49,18 @@ public class NoteController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<Void> update(@PathVariable("id") int id, @RequestBody Note note) {
-        note.setId(id);
-        noteUserService.addNote(note);
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<Void> update(@RequestBody Note note) {
+
+        noteUserService.updateNote(note);
 
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-    public ResponseEntity<Void> delete(@PathVariable("id") int id, @RequestBody Note note) {
-        note.setId(id);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+
         noteUserService.delete(id);
 
         HttpHeaders headers = new HttpHeaders();
