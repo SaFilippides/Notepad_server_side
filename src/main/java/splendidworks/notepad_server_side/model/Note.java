@@ -16,6 +16,24 @@ public class Note {
     private String name;
     private String image_path;
     private String note;
+    private String date;
+    private String city;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Note() {
         super();

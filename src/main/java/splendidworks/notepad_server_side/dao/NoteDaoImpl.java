@@ -54,6 +54,8 @@ public class NoteDaoImpl implements NoteDao {
             parameterSource.addValue("image_path", note.getImagePath());
             parameterSource.addValue("note", note.getNote());
             parameterSource.addValue("user_id", note.getUser_id());
+            parameterSource.addValue("date", note.getDate());
+            parameterSource.addValue("city", note.getCity());
         }
         return parameterSource;
     }
@@ -67,6 +69,8 @@ public class NoteDaoImpl implements NoteDao {
             note.setImagePath(rs.getString("image_path"));
             note.setNote(rs.getString("note"));
             note.setUser_id(rs.getInt("user_id"));
+            note.setCity(rs.getString("city"));
+            note.setDate(rs.getString("date"));
 
             return note;
         }
@@ -76,14 +80,14 @@ public class NoteDaoImpl implements NoteDao {
     @Override
     public void addNote(Note note) {
 
-        String sql = "INSERT INTO note(name, note, image_path, user_id) VALUES(:name, :note, :image_path, :user_id)";
+        String sql = "INSERT INTO note(name, note, image_path, user_id, date, city) VALUES(:name, :note, :image_path, :user_id, :date, :city)";
         namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
 
     }
 
     @Override
     public void updateNote(Note note) {
-        String sql = "UPDATE note SET name=:name, image_path=:image_path, note=:note WHERE id =:id";
+        String sql = "UPDATE note SET name=:name, image_path=:image_path, note=:note, date=:date, city=:city WHERE id =:id";
 
         namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(note));
     }
